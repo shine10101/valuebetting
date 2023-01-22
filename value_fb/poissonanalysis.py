@@ -57,6 +57,7 @@ def analysis(Train, Test, teams):
     phg = []
     pag = []
     for index, row in Test.iterrows():
+        row = Test.iloc[1,]
         scores = np.zeros((10, 10))
         for score1 in range(0,10):
             for score2 in range(0,10):
@@ -67,8 +68,11 @@ def analysis(Train, Test, teams):
         AWin.append(sum(sum(np.triu(scores))) - sum(np.diag(scores)))
 
         homeg, awayg = np.where(scores == np.amax(scores))
+        # print(homeg[0])
+        # print(awayg[0])
         phg.append(homeg[0])
         pag.append(awayg[0])
+
 
     Test['HWin'] = HWin
     Test['Draw'] = draw
