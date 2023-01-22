@@ -73,8 +73,9 @@ def analysis(Train, Test, teams):
     Test['HWin'] = HWin
     Test['Draw'] = draw
     Test['AWin'] = AWin
-    Test['PredHomeGoal'] = phg
-    Test['PredAwayGoal'] = pag
-
+    Test['Pred_FTHG'] = phg
+    Test['Pred_FTAG'] = pag
+    Test['Pred_FTR'] = np.nan
+    Test['Pred_FTR'] = Test['Pred_FTR'].mask(Test.Pred_FTHG == Test.Pred_FTAG, "D").mask(Test.Pred_FTHG > Test.Pred_FTAG, "H").mask(Test.Pred_FTHG < Test.Pred_FTAG, "A")
 
     return Test
