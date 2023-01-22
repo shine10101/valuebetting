@@ -5,7 +5,7 @@ from sklearn.metrics import classification_report
 from multiprocessing import Pool
 data = data_ingestion.get_links()
 
-def parallel_leagueanalysis(league):
+def leagueanalysis(league):
     unique_dates = pd.DataFrame(league.Date.dt.strftime('%y-%m-%d').unique())
     unique_dates = [pd.to_datetime(t, format='%y-%m-%d') for t in unique_dates[0]]
     y = unique_dates[0] + datetime.timedelta(days=60)
@@ -31,6 +31,6 @@ def parallel_leagueanalysis(league):
 
 if __name__ == '__main__':
     with Pool(4) as pool:
-        df = pd.concat(pool.starmap(parallel_leagueanalysis, data))
+        df = pd.concat(pool.starmap(leagueanalysis, data))
 
     print('done')
