@@ -57,7 +57,6 @@ def analysis(Train, Test, teams):
     phg = []
     pag = []
     for index, row in Test.iterrows():
-        row = Test.iloc[1,]
         scores = np.zeros((10, 10))
         for score1 in range(0,10):
             for score2 in range(0,10):
