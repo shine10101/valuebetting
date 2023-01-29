@@ -3,8 +3,8 @@ from scipy.stats import poisson
 import numpy as np
 
 
-def analysis(Train, Test, teams):
-
+def analysis(Train, Test):
+    teams = pd.DataFrame(sorted(Train.HomeTeam.unique()))
     home_form=[]
     away_form=[]
     # calculate home and away strengths

@@ -9,5 +9,12 @@ def get_links():
         r = (pd.read_csv(url,parse_dates=['Date'], date_parser=lambda x: pd.to_datetime(x, format='%d/%m/%Y')),)
         data.append(r)
 
+    data_dct = dict(zip(refs, data))
+
+    return data, data_dct
+
+def get_fixtures():
+    url = 'https://www.football-data.co.uk/fixtures.csv'
+    data = pd.read_csv(url,parse_dates=['Date'], date_parser=lambda x: pd.to_datetime(x, format='%d/%m/%Y'))
     return data
 

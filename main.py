@@ -3,8 +3,10 @@ from value_fb import data_ingestion, poissonanalysis
 import datetime
 from sklearn.metrics import classification_report
 from multiprocessing import Pool
-data = data_ingestion.get_links()
+data, data_dct = data_ingestion.get_links()
+fixtures = data_ingestion.get_fixtures()
 
+print('stop')
 def leagueanalysis(league):
     unique_dates = pd.DataFrame(league.Date.dt.strftime('%y-%m-%d').unique())
     unique_dates = [pd.to_datetime(t, format='%y-%m-%d') for t in unique_dates[0]]
@@ -15,7 +17,7 @@ def leagueanalysis(league):
     for day in train_test_dates:
         Train = league[(league['Date'] < day)]
         Test = league[(league['Date'] == day)]
-        results.append(poissonanalysis.analysis(Train, Test, teams))
+        results.append(poissonanalysis.analysis(Train, Test))
 
     output = pd.concat(results)
     # Calculate Overall prediction accuracy
@@ -29,8 +31,26 @@ def leagueanalysis(league):
     # Calculate Prediction accuracy BTTS #TODO
     # Calculate Prediction accuracy over/under 2.5 #TODO
 
+def fixture_predictions(fixtures, data_dct):
+    leagues = fixtures['Div'].unique()
+    predictions=[]
+    for league in leagues:
+        try:
+            league_fixtures = fixtures[fixtures['Div']==league]
+            league_data = data_dct[league][0]
+            predictions.append(poissonanalysis.analysis(league_data, league_fixtures))
+        except:
+            print(league)
+            pass
+    output = pd.concat(predictions)
+    return output
+
 if __name__ == '__main__':
-    with Pool(4) as pool:
-        df = pd.concat(pool.starmap(leagueanalysis, data))
+    # with Pool(4) as pool:
+    #     df = pd.concat(pool.starmap(leagueanalysis, data))
+
+    pred = fixture_predictions(fixtures, data_dct)
+
+
 
     print('done')
