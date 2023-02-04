@@ -1,8 +1,11 @@
 import pandas as pd
-from value_fb import data_ingestion, poissonanalysis
+from value_fb import data_ingestion, poissonanalysis, calculate_value
 import datetime
 from sklearn.metrics import classification_report
 from multiprocessing import Pool
+# from .models import DataFrameModel
+# import django_tables2 as tables
+# from django.db import models
 data, data_dct = data_ingestion.get_links()
 fixtures = data_ingestion.get_fixtures()
 
@@ -46,11 +49,11 @@ def fixture_predictions(fixtures, data_dct):
     return output
 
 if __name__ == '__main__':
-    # with Pool(4) as pool:
-    #     df = pd.concat(pool.starmap(leagueanalysis, data))
+    with Pool(4) as pool:
+        df = pd.concat(pool.starmap(leagueanalysis, data))
 
     pred = fixture_predictions(fixtures, data_dct)
-
-
+    pred = calculate_value.value(pred)
+    pred.to_csv('predictions.csv')
 
     print('done')
