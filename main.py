@@ -50,5 +50,6 @@ if __name__ == '__main__':
     pred = fixture_predictions(fixtures, data_dct)
     pred = calculate_value.value(pred)
     pred.to_csv('predictions.csv')
+    pred.to_csv('newfile.csv')
 
     print('done')
