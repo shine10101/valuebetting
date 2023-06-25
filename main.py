@@ -48,7 +48,6 @@ def fixture_predictions(fixtures, data_dct):
 if __name__ == '__main__':
     # with Pool(4) as pool:
     #     # df = pd.concat(pool.starmap(leagueanalysis, data))
-
     pred = fixture_predictions(fixtures, data_dct)
     pred = calculate_value.value(pred)
     pred.to_csv('predictions.csv')
