@@ -6,7 +6,6 @@ from multiprocessing import Pool
 data, data_dct = data_ingestion.get_links()
 fixtures = data_ingestion.get_fixtures()
 
-print('stop')
 def leagueanalysis(league):
     unique_dates = pd.DataFrame(league.Date.dt.strftime('%y-%m-%d').unique())
     unique_dates = [pd.to_datetime(t, format='%y-%m-%d') for t in unique_dates[0]]
