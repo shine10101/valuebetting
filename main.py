@@ -3,9 +3,6 @@ from value_fb import data_ingestion, poissonanalysis, calculate_value
 import datetime
 from sklearn.metrics import classification_report
 from multiprocessing import Pool
-# from .models import DataFrameModel
-# import django_tables2 as tables
-# from django.db import models
 data, data_dct = data_ingestion.get_links()
 fixtures = data_ingestion.get_fixtures()
 
